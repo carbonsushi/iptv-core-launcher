@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IPTV Core launcher</string>
+
+    <string name="playlist_address_title">Playlist address</string>
+    <string name="about_title">About</string>
+    <string name="about_description">IPTV Core launcher.</string>
+
+    <string name="start_activity_error">Error: Failed to start IPTV Core.</string>
+</resources>
