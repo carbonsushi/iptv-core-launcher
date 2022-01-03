@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.posick.mdns.Lookup
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.xbill.DNS.ARecord
 import org.xbill.DNS.DClass
 import org.xbill.DNS.Type
@@ -39,22 +40,20 @@ class LaunchActivity : AppCompatActivity() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val playlistUrl = sharedPreferences.getString("playlist_address", "")!!
+        val playlistHttpUrl = playlistUrl.toHttpUrlOrNull()
 
-        if (playlistUrl.isEmpty()) {
+        if (playlistHttpUrl == null) {
             Toast.makeText(this, R.string.set_up_error, Toast.LENGTH_LONG).show()
             startActivity(Intent(this, SettingsActivity::class.java))
             finish()
         } else {
-            val playlistUri = Uri.parse(playlistUrl)
-            val playlistHttpUrl = playlistUrl.toHttpUrl()
-
             if (sharedPreferences.getBoolean("resolve_mdns", false)) {
                 lifecycleScope.launch {
                     val records = withContext(Dispatchers.IO) {
                         Lookup(playlistHttpUrl.host, Type.A, DClass.IN).lookupRecords()
                     }
                     if (records.isEmpty()) {
-                        startIntent(playlistUri)
+                        startIntent(Uri.parse(playlistUrl))
                     } else {
                         startIntent(
                             Uri.parse(
@@ -66,7 +65,7 @@ class LaunchActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                startIntent(playlistUri)
+                startIntent(Uri.parse(playlistUrl))
             }
         }
     }
