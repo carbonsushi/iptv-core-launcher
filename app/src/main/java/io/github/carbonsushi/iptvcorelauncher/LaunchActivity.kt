@@ -29,7 +29,7 @@ class LaunchActivity : AppCompatActivity() {
         runCatching {
             startActivity(sendIntent)
         }.onFailure {
-            Toast.makeText(this, R.string.start_activity_error, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.start_activity_error, Toast.LENGTH_LONG).show()
         }
         finishAndRemoveTask()
     }
@@ -39,28 +39,35 @@ class LaunchActivity : AppCompatActivity() {
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val playlistUrl = sharedPreferences.getString("playlist_address", "")!!
-        val playlistUri = Uri.parse(playlistUrl)
-        val playlistHttpUrl = playlistUrl.toHttpUrl()
 
-        if (sharedPreferences.getBoolean("resolve_mdns", false)) {
-            lifecycleScope.launch {
-                val records = withContext(Dispatchers.IO) {
-                    Lookup(playlistHttpUrl.host, Type.A, DClass.IN).lookupRecords()
-                }
-                if (records.isEmpty()) {
-                    startIntent(playlistUri)
-                } else {
-                    startIntent(
-                        Uri.parse(
-                            playlistHttpUrl.newBuilder()
-                                .host((records[0] as ARecord).address.hostAddress!!).build()
-                                .toString()
-                        )
-                    )
-                }
-            }
+        if (playlistUrl.isEmpty()) {
+            Toast.makeText(this, R.string.set_up_error, Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, SettingsActivity::class.java))
+            finish()
         } else {
-            startIntent(playlistUri)
+            val playlistUri = Uri.parse(playlistUrl)
+            val playlistHttpUrl = playlistUrl.toHttpUrl()
+
+            if (sharedPreferences.getBoolean("resolve_mdns", false)) {
+                lifecycleScope.launch {
+                    val records = withContext(Dispatchers.IO) {
+                        Lookup(playlistHttpUrl.host, Type.A, DClass.IN).lookupRecords()
+                    }
+                    if (records.isEmpty()) {
+                        startIntent(playlistUri)
+                    } else {
+                        startIntent(
+                            Uri.parse(
+                                playlistHttpUrl.newBuilder()
+                                    .host((records[0] as ARecord).address.hostAddress!!).build()
+                                    .toString()
+                            )
+                        )
+                    }
+                }
+            } else {
+                startIntent(playlistUri)
+            }
         }
     }
 }

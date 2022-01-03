@@ -8,5 +8,6 @@
     <string name="about_title">About</string>
     <string name="about_description">IPTV Core launcher.</string>
 
+    <string name="set_up_error">Error: Playlist address is not set.</string>
     <string name="start_activity_error">Error: Failed to start IPTV Core.</string>
 </resources>
