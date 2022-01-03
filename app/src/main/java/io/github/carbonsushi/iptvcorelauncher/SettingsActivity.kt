@@ -1,13 +1,9 @@
 package io.github.carbonsushi.iptvcorelauncher
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.mikepenz.aboutlibraries.LibsBuilder
 
 class SettingsActivity : AppCompatActivity(R.layout.settings_activity) {
@@ -15,29 +11,10 @@ class SettingsActivity : AppCompatActivity(R.layout.settings_activity) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val playlist = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("playlist_address", "")
-
-            if (playlist == "") {
-                supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.settings_container, SettingsFragment())
-                    .commit()
-            } else {
-                val intent = Intent().apply {
-                    setClassName(
-                        "ru.iptvremote.android.iptv.core",
-                        "ru.iptvremote.android.iptv.core.ChannelsActivity"
-                    )
-                    data = Uri.parse(playlist)
-                }
-                runCatching {
-                    startActivity(intent)
-                }.onFailure {
-                    Toast.makeText(this, R.string.start_activity_error, Toast.LENGTH_SHORT).show()
-                }
-                finish()
-            }
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.settings_container, SettingsFragment())
+                .commit()
         }
     }
 

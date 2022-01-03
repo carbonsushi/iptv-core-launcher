@@ -12,8 +12,23 @@
         android:theme="@style/Theme.IPTVCoreLauncher">
 
         <activity
+            android:name=".LaunchActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".SettingsActivity"
-            android:exported="true">
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_settings"
+            android:launchMode="singleTask"
+            android:roundIcon="@mipmap/ic_launcher_settings_round">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
