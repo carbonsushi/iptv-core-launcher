@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">\
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        android:key="resolve_mdns"
+        android:title="@string/resolve_mdns_title" />
+
     <EditTextPreference
         android:key="playlist_address"
         android:title="@string/playlist_address_title"
