@@ -27,6 +27,7 @@
             android:name=".SettingsActivity"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_settings"
+            android:label="@string/app_settings_name"
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_settings_round">
 

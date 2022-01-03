@@ -12,6 +12,7 @@ class LaunchActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         val sendIntent = Intent().apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
             setClassName(
                 "ru.iptvremote.android.iptv.core",
                 "ru.iptvremote.android.iptv.core.ChannelsActivity"
@@ -26,6 +27,6 @@ class LaunchActivity : Activity() {
         }.onFailure {
             Toast.makeText(this, R.string.start_activity_error, Toast.LENGTH_SHORT).show()
         }
-        finish()
+        finishAndRemoveTask()
     }
 }

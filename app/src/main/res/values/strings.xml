@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">IPTV Core launcher</string>
+    <string name="app_settings_name">IPTV Core launcher: Settings</string>
 
     <string name="playlist_address_title">Playlist address</string>
     <string name="about_title">About</string>
