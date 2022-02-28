@@ -19,6 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keepclasseswithmembernames class org.xbill.DNS.TXTRecord
+-keepclasseswithmembernames class org.xbill.DNS.ResolverConfig
 -keepclasseswithmembernames class net.posick.mdns.MulticastDNSCache { *; }
 -keepclasseswithmembernames class org.xbill.DNS.Cache$CacheRRset { *; }
